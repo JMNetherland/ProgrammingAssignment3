@@ -5,8 +5,7 @@ rankall <- function(outcome, num = "best") {
         ## Return a data frame with the hospital names and the
         ## (abbreviated) state name
         
-        
-        source("rankhospital.R")
+
         
         ## Read outcome data setting "Not Available" to NA
         data <- read.csv("outcome-of-care-measures.csv"
@@ -26,7 +25,9 @@ rankall <- function(outcome, num = "best") {
                 
                 df1 <- data.frame(stringsAsFactors = FALSE)
                 
-                for(i in 1:54) {
+                for(i in 1:length(st)) {
+
+                        
                         sub1 <- data[which(data$State==st[i]), c("Hospital.Name", "State", outcome)]
                         
                         ## Return hospital name in that state with the given rank
@@ -39,11 +40,9 @@ rankall <- function(outcome, num = "best") {
                         worstnum <- nrow(sub2)
                         
                         ## Display hosital name based on the num input
-                        if(num == "best") t <- c(sub2[1,]$Hospital.Name, st[i])
-                        else if(num == "worst") t <- c(sub2[worstnum,]$Hospital.Name, st[i])
-                        else t <- c(sub2[num,]$Hospital.Name, st[i])
-                        
-                        df1 <- rbind(df1, t)
+                        if(num == "best") df1 <- rbind(df1,data.frame(sub2[1,]$Hospital.Name, st[i]))
+                        else if(num == "worst") df1 <- rbind(df1,data.frame(sub2[worstnum,]$Hospital.Name, st[i]))
+                        else df1 <- rbind(df1,data.frame(hospital=sub2[num,]$Hospital.Name, state=st[i]))
                 }
                 
                 df1
