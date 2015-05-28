@@ -40,12 +40,12 @@ rankall <- function(outcome, num = "best") {
                         worstnum <- nrow(sub2)
                         
                         ## Display hosital name based on the num input
-                        if(num == "best") df1 <- rbind(df1,data.frame(sub2[1,]$Hospital.Name, st[i]))
-                        else if(num == "worst") df1 <- rbind(df1,data.frame(sub2[worstnum,]$Hospital.Name, st[i]))
-                        else df1 <- rbind(df1,data.frame(hospital=sub2[num,]$Hospital.Name, state=st[i]))
+                        if(num == "best") df1 <- rbind(df1,data.frame(hospital=sub2[1,]$Hospital.Name, state=st[i], stringsAsFactors = FALSE))
+                        else if(num == "worst") df1 <- rbind(df1,data.frame(hospital=sub2[worstnum,]$Hospital.Name, state=st[i], stringsAsFactors = FALSE))
+                        else df1 <- rbind(df1,data.frame(hospital=sub2[num,]$Hospital.Name, state=st[i], stringsAsFactors = FALSE))
                 }
                 
-                df1
+                df1[order(df1$state),]
                 
         }
         else {
